@@ -44,7 +44,7 @@
                     <a href="{{ url('/collectors') }}"
                         class="nav-link {{ request()->is('collectors*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user-tie"></i>
-                        <p>Penagih (Collector)</p>
+                        <p>Penagih</p>
                     </a>
                 </li>
                 <li class="nav-item">
