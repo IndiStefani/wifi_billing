@@ -16,28 +16,32 @@
     @stack('css')
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
+<body class="hold-transition sidebar-mini layout-fixed text-sm">
+    <div class="wrapper">
         @include('layouts.partials.navbar')
+        @include('layouts.partials.sidebar')
 
-        {{-- @include('layouts.partials.sidebar') --}}
-
-        {{-- ==================== CONTENT ==================== --}}
-        @isset($header)
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
+        <div class="content-wrapper">
+            @isset($header)
+                <div class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1 class="m-0 text-dark">{{ $header }}</h1>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </header>
-        @endisset
+            @endisset
 
-        <main>
-            {{-- <div class="content-wrapper"> --}}
-                <div class="content">
-                        {{ $slot }}
-            </div>
-            @include('layouts.partials.footer')
-        </main>
+            <section class="content">
+                <div class="container-fluid">
+                    {{ $slot }}
+                </div>
+            </section>
+        </div>
+
+        @include('layouts.partials.footer')
     </div>
 
     <!-- jQuery -->
