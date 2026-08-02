@@ -1,36 +1,56 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <title>{{ config('app.name', 'Wi-Fi Billing') }}</title>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
+    <!-- AdminLTE CSS -->
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}">
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+    @stack('css')
+</head>
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
-    </body>
+<body class="font-sans antialiased">
+    <div class="min-h-screen bg-gray-100">
+        @include('layouts.partials.navbar')
+
+        {{-- @include('layouts.partials.sidebar') --}}
+
+        {{-- ==================== CONTENT ==================== --}}
+        @isset($header)
+            <header class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $header }}
+                </div>
+            </header>
+        @endisset
+
+        <main>
+            {{-- <div class="content-wrapper"> --}}
+                <div class="content">
+                        {{ $slot }}
+            </div>
+            @include('layouts.partials.footer')
+        </main>
+    </div>
+
+    <!-- jQuery -->
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- AdminLTE App -->
+    <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
+    <!-- Chart.js (dipakai untuk grafik dashboard) -->
+    <script src="{{ asset('vendor/chart.js/dist/chart.umd.min.js') }}"></script>
+
+    @stack('scripts')
+
+</body>
+
 </html>
