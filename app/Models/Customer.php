@@ -31,4 +31,9 @@ class Customer extends Model
     {
         return $this->hasMany(CustomerService::class, 'cust_id');
     }
+
+    public function latestService()
+    {
+        return $this->hasOne(CustomerService::class, 'cust_id')->latestOfMany();
+    }
 }

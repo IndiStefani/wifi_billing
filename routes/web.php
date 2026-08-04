@@ -4,6 +4,8 @@ use App\Http\Controllers\AreaCollectorController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CollectorController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerServiceController;
 use App\Http\Controllers\InternetPacketController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RolePermissionController;
@@ -48,6 +50,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('areas', AreaController::class)->except(['show']);
     Route::resource('collectors', CollectorController::class)->except(['show']);
     Route::resource('area-collectors', AreaCollectorController::class)->except(['show']);
+    Route::resource('customers', CustomerController::class);
+    Route::resource('customer-services', CustomerServiceController::class)->except(['show']);
 });
 
 require __DIR__.'/auth.php';

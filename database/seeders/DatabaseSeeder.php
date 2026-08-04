@@ -23,7 +23,10 @@ class DatabaseSeeder extends Seeder
             AreaSeeder::class,
             CollectorSeeder::class,
             AreaCollectorSeeder::class,
+            RouterSeeder::class,
             InternetPacketSeeder::class,
+            CustomerSeeder::class,
+            CustomerServiceSeeder::class,
         ]);
     }
 }
