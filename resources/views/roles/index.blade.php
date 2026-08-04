@@ -21,8 +21,8 @@
                     <div class="card-header">
                         <h3 class="card-title">Roles</h3>
                     </div>
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
+                    <div class="card-body table-responsive">
+                        <table id="rolesTable" class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
                                     <th>Nama</th>
@@ -59,8 +59,8 @@
                     <div class="card-header">
                         <h3 class="card-title">Permissions</h3>
                     </div>
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
+                    <div class="card-body table-responsive">
+                        <table id="permissionsTable" class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
                                     <th>Nama</th>
@@ -119,4 +119,26 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            $(function () {
+                $('#rolesTable').DataTable({
+                    responsive: true,
+                    autoWidth: false,
+                    ordering: true,
+                    searching: true,
+                    paging: true,
+                });
+
+                $('#permissionsTable').DataTable({
+                    responsive: true,
+                    autoWidth: false,
+                    ordering: true,
+                    searching: true,
+                    paging: true,
+                });
+            });
+        </script>
+    @endpush
 </x-app-layout>

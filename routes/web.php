@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InternetPacketController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
@@ -37,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get('permissions/{permission}/edit', [RolePermissionController::class, 'editPermission'])->name('permissions.edit');
     Route::patch('permissions/{permission}', [RolePermissionController::class, 'updatePermission'])->name('permissions.update');
     Route::delete('permissions/{permission}', [RolePermissionController::class, 'destroyPermission'])->name('permissions.destroy');
+
+    Route::resource('internet-packets', InternetPacketController::class)->except(['show']);
 });
 
 require __DIR__.'/auth.php';

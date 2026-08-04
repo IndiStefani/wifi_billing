@@ -34,7 +34,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/internet-packets') }}"
+                    <a href="{{ route('internet-packets.index') }}"
                         class="nav-link {{ request()->is('internet-packets*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-box"></i>
                         <p>Paket Internet</p>
