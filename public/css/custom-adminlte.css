@@ -25,3 +25,117 @@ body.text-sm,
 .card h6 {
     font-size: 1rem !important;
 }
+
+body.login-page {
+    background: linear-gradient(135deg, #0f172a 0%, #2563eb 45%, #38bdf8 100%);
+    min-height: 100vh;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 1100px;
+    margin: 4rem auto;
+    padding: 1rem;
+}
+
+.login-box .card {
+    border-radius: 1.5rem;
+    border: none;
+    box-shadow: 0 10px 30px rgba(2,6,23,0.25);
+}
+
+.login-hero {
+    background: linear-gradient(145deg, rgba(8, 30, 80, 0.98), rgba(37, 99, 235, 0.95));
+    color: #fff;
+    padding: 3rem 2.6rem 3rem 3.4rem;
+    display: flex;
+    align-items: center;
+    min-height: 340px;
+}
+
+.login-hero .hero-content {
+    width: 100%;
+    padding-left: 1.2rem;
+}
+
+.login-hero .hero-badge {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.12);
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+}
+
+.login-hero h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.65rem;
+}
+
+.login-hero p,
+.login-hero .hero-list {
+    color: rgba(255,255,255,0.95);
+}
+
+.login-hero .hero-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+}
+
+.login-hero .hero-list li {
+    margin-bottom: 0.7rem;
+}
+
+.login-card-body {
+    padding: 2.5rem 2.6rem;
+}
+
+.brand-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #2563eb, #38bdf8);
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.login-card-body .btn-primary {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    border: none;
+    border-radius: 0.85rem;
+    padding: 0.9rem 1.1rem;
+    font-weight: 700;
+}
+
+.login-card-body .form-control {
+    border-radius: 0.85rem;
+    padding: 0.9rem 1rem;
+}
+
+.login-card-body .input-group-text {
+    border-radius: 0 0.75rem 0.75rem 0;
+    background: #f8fafc;
+}
+
+@media (max-width: 991.98px) {
+    .login-hero {
+        border-radius: 1.25rem 1.25rem 0 0;
+        padding: 1.6rem;
+    }
+
+    .login-card-body {
+        padding: 1.6rem;
+    }
+    .login-box {
+        margin: 2rem auto;
+    }
+}
