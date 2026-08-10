@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             InternetPacketSeeder::class,
             CustomerSeeder::class,
             CustomerServiceSeeder::class,
+            BillingDemoSeeder::class,
         ]);
     }
 }

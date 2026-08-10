@@ -6,6 +6,8 @@ use App\Models\Area;
 use App\Models\Branch;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class CustomerController extends Controller
 {
@@ -85,5 +87,113 @@ class CustomerController extends Controller
         $customer->delete();
 
         return redirect()->route('customers.index')->with('success', 'Pelanggan berhasil dihapus.');
+    }
+
+    public function export()
+    {
+        $customers = Customer::with(['branch', 'area'])->orderBy('nama')->get();
+
+        $filename = 'customers-' . now()->format('YmdHis') . '.csv';
+        $tempPath = storage_path('app/public/exports/' . $filename);
+
+        if (! is_dir(dirname($tempPath))) {
+            mkdir(dirname($tempPath), 0755, true);
+        }
+
+        $handle = fopen($tempPath, 'w');
+        fputcsv($handle, ['cust_code', 'branch_name', 'area_name', 'nama', 'email', 'telepon', 'alamat', 'register_date', 'status']);
+
+        foreach ($customers as $customer) {
+            fputcsv($handle, [
+                $customer->cust_code,
+                $customer->branch->nama ?? '',
+                $customer->area->nama_area ?? '',
+                $customer->nama,
+                $customer->email,
+                $customer->telepon,
+                $customer->alamat,
+                optional($customer->register_date)->format('Y-m-d'),
+                $customer->status,
+            ]);
+        }
+
+        fclose($handle);
+
+        return response()->download($tempPath, $filename)->deleteFileAfterSend(true);
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => ['required', 'file', 'mimes:csv,xlsx,xls'],
+        ]);
+
+        $path = $request->file('file')->store('imports', 'local');
+        $fullPath = storage_path('app/' . $path);
+
+        if (! file_exists($fullPath)) {
+            return back()->with('error', 'File import tidak ditemukan.');
+        }
+
+        $rows = [];
+        $extension = strtolower($request->file('file')->getClientOriginalExtension());
+
+        if ($extension === 'csv') {
+            $handle = fopen($fullPath, 'r');
+            $header = fgetcsv($handle);
+            while (($row = fgetcsv($handle)) !== false) {
+                if (count($row) < 2) {
+                    continue;
+                }
+                $rows[] = array_combine($header, $row);
+            }
+            fclose($handle);
+        } else {
+            $spreadsheet = IOFactory::load($fullPath);
+            $sheet = $spreadsheet->getActiveSheet();
+            $rows = $sheet->toArray();
+            $header = array_shift($rows);
+            $rows = array_map(function ($row) use ($header) {
+                return array_combine($header, $row);
+            }, $rows);
+        }
+
+        $imported = 0;
+
+        foreach ($rows as $row) {
+            if (! $row || ! is_array($row)) {
+                continue;
+            }
+
+            $branch = Branch::where('nama', trim($row['branch_name'] ?? ''))->first();
+            $area = Area::where('nama_area', trim($row['area_name'] ?? ''))->first();
+
+            $customerData = [
+                'cust_code' => trim($row['cust_code'] ?? ''),
+                'branch_id' => $branch?->id,
+                'area_id' => $area?->id,
+                'nama' => trim($row['nama'] ?? ''),
+                'email' => trim($row['email'] ?? ''),
+                'telepon' => trim($row['telepon'] ?? ''),
+                'alamat' => trim($row['alamat'] ?? ''),
+                'register_date' => ! empty($row['register_date']) ? $row['register_date'] : null,
+                'status' => ! empty($row['status']) ? $row['status'] : 'active',
+            ];
+
+            if (empty($customerData['cust_code']) || empty($customerData['nama'])) {
+                continue;
+            }
+
+            Customer::updateOrCreate(
+                ['cust_code' => $customerData['cust_code']],
+                $customerData
+            );
+
+            $imported++;
+        }
+
+        Storage::disk('local')->delete($path);
+
+        return back()->with('success', 'Import pelanggan selesai. ' . $imported . ' data diproses.');
     }
 }
